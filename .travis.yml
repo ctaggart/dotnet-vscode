@@ -1,0 +1,30 @@
+# https://github.com/ctaggart/dotnet-vscode
+# https://travis-ci.org/ctaggart/dotnet-vscode
+
+# Ubuntu Trusty 14.04 with Docker
+# https://docs.travis-ci.com/user/ci-environment/
+# https://docs.travis-ci.com/user/docker/
+sudo: required
+dist: trusty
+services:
+  - docker
+
+env:
+  global:
+    - VERSION=0.0.0
+    - if [ ! -z "$TRAVIS_TAG" ]; then VERSION=$TRAVIS_TAG; fi
+    # travis encrypt DOCKER_HUB_EMAIL=a DOCKER_HUB_USERNAME=b DOCKER_HUB_PASSWORD=c
+    - secure: "b+Qnsq8cCzYkk60soZUd1b35waYLp0iFZmGYguW0bs7BuPuQ1hHV97YiNVa2uS0qIVf5g5efadH46f/YZzbm7bVQ999pnz/mtbOxue8iQiGjCDzaXJYqPQ5wr5+xIqTn6gBZzEkwyr2bYohnlVVAnuY5nynQkR2YhFTEP9L1no9k+FRCKat0NV4EGsXEmbPlpUOIPJm2nQDQMJHCHPY5dZp6lj2HyKsJgcPARE8TbAzEyZHilCfNYVpOFVolNV1WmsYL9PiwU8hM9+SlZEkYVp0akMQJ0L3kLl2wQqn7UZ1IjwQuM5tEtkqQiLIzmQF82Ju+I7poGOYa+1QQSJ7qhdfSA0/pMsJVN1A2FyQpt15EAWt87KDRyyAvkNca24VTAe2s02aA56P1opYXvTqT9cBB4YHf4Nd4vwPuAW+LVyzTJ8kut7PSaOw0U4Ed1N4vw++4cFfWJbhRmDM42R+mWLnCuQ1ud0nL9t3pZDIBesL572yyD83XpoZIRu6UMJH6ARXf9bT9EENIDoLIpRbehg2u9Oqcf2+2PAAcmb9Q60+5vkW/NriCfUGQ6+OCtb4u4jmugyenHQjNXGif8Lhj+5mQW82CNPQpXnS5uej/Rmzq1VZn0rIs/JzXEf16pXz/tdMlttVxs/uXJ4w31O9MKhfq/HbKCB458WzOjfLWipI="
+
+install: true
+
+script:
+  - docker build -t ctaggart/dotnet-vscode:$VERSION .
+
+after_success:
+  - if [ ! -z "$TRAVIS_TAG" ]; then
+      docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD;
+      docker push ctaggart/dotnet-vscode:$VERSION;
+      docker tag -f ctaggart/dotnet-vscode:$VERSION ctaggart/dotnet-vscode:latest;
+      docker push ctaggart/dotnet-vscode:latest;
+    fi
