@@ -12,12 +12,17 @@ Adds a development environment to the [.NET Core Docker Image](https://hub.docke
 Docker is needed. To display the Visual Studio Code windows, an X11 Server or Xpra is needed.
 Xpra is recommended, especially if running the image from another computer.
 
-## Running
+## Running with Xpra
 ```
 docker run --rm -it -p 6100:6100 ctaggart/dotnet-vscode
 . start-xpra.sh
 code .
 ```
+### Known Issues
+* Inconsistent DPI with multimonitor client, see [#5](https://github.com/ctaggart/dotnet-vscode/issues/5)
+
+## Running with X11
+Download or create a script like [run-mac-x11.sh](run-mac-x11.sh).
 
 ## Related Blog Posts
 * 2015-05 [Visual Studio Code served from Docker](http://blog.ctaggart.com/2016/05/visual-studio-code-served-from-docker.html)
