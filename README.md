@@ -9,6 +9,10 @@ Adds a development environment to the [.NET Core Docker Image](https://hub.docke
 * [Mono](http://www.mono-project.com/) is installed for now to support the Ionide language service
 * [Xpra](https://xpra.org/) for displaying Visual Studio Code
 
+## Movie Demo
+### 2015-05-23 Status of Suave running on .NET Core 1.0 RC2
+[![Status of Suave running on .NET Core 1.0 RC2](https://cloud.githubusercontent.com/assets/80104/15492325/f336a2d8-212e-11e6-944b-2d240058a6a5.png)](https://youtu.be/qjH1yaWcUHI)
+
 ## Required Software
 Docker is needed. To display the Visual Studio Code windows, an X11 Server or Xpra is needed.
 Xpra is recommended, especially if running the image from another computer.
